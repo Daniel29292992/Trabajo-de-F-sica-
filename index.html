@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análisis Cinemático del Movimiento Parabólico - UNCP</title>
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --accent-color: #00f2fe;
+      --text-color: #c9d1d9;
+      --border-color: #30363d;
+      --highlight: #4fd1c5;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 35px 20px;
+      background: linear-gradient(135deg, #1f242d, #0d1117);
+      border-bottom: 2px solid var(--accent-color);
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .institution {
+      font-size: 0.95rem;
+      color: var(--highlight);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      color: var(--accent-color);
+      font-size: 1.8rem;
+      margin: 10px 0;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: #8b949e;
+      font-size: 1.05rem;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: var(--accent-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      font-size: 1.3rem;
+    }
+
+    h3 {
+      color: var(--highlight);
+      font-size: 1.1rem;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tarjetas de Proyectos */
+    .project-card {
+      background-color: #0d1117;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .project-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .project-img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: #161b22;
+    }
+
+    .project-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .btn-materials {
+      background-color: transparent;
+      color: var(--accent-color);
+      border: 1px solid var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-materials:hover {
+      background-color: var(--accent-color);
+      color: #0d1117;
+    }
+
+    .materials-content {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .materials-content.active {
+      display: block;
+    }
+
+    .materials-gallery {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .materials-gallery img {
+      width: 160px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid var(--border-color);
+      background-color: #21262d;
+    }
+
+    /* Fórmulas */
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .formula-card {
+      background-color: #0d1117;
+      border-left: 3px solid var(--highlight);
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    .math-text {
+      font-size: 1.1rem;
+      margin-top: 8px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* Calculadora */
+    .calculator-box {
+      background-color: #0d1117;
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--highlight);
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 9px;
+      background-color: #161b22;
+      border: 1px solid var(--border-color);
+      color: white;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .btn-calc {
+      background-color: var(--accent-color);
+      color: #0d1117;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-calc:hover {
+      background-color: var(--highlight);
+    }
+
+    .results-box {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #16222f;
+      border-left: 4px solid var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .btn-video {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: var(--accent-color);
+      color: #0d1117;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .btn-video:hover {
+      background-color: var(--highlight);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #8b949e;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- I. ENCABEZADO -->
+    <header>
+      <div class="institution">Universidad Nacional del Centro del Perú</div>
+      <div class="institution">Facultad de Ingeniería Química | Asignatura: Física I</div>
+      <h1>Análisis Cinemático del Movimiento Parabólico</h1>
+      <p class="subtitle">Descomposición en MRU y MRUV mediante dos modelos de lanzamiento</p>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: var(--highlight);">Docente: Ing. Vilma Calderon Flores</p>
+    </header>
+
+    <!-- II. RESUMEN Y OBJETIVOS -->
+    <section>
+      <h2>I. Resumen y Objetivos</h2>
+      <p>
+        El presente proyecto analiza la cinemática del movimiento parabólico mediante dos modelos de lanzamiento experimentales: 
+        un <strong>cañón de jeringa</strong> y una <strong>catapulta de madera</strong>. 
+        El estudio se basa en la descomposición del movimiento en su componente horizontal (MRU) y vertical (MRUV), midiendo alcance horizontal, tiempo de vuelo y velocidades con la ayuda de un circuito basado en <strong>Arduino Uno</strong> y un sensor ultrasónico <strong>HC-SR04</strong>.
+      </p>
+
+      <h3>Objetivos Específicos:</h3>
+      <ul>
+        <li>Determinar experimentalmente el alcance horizontal, tiempo de vuelo y velocidades inicial y final.</li>
+        <li>Aplicar las ecuaciones del MRU y MRUV para descomponer el movimiento parabólico.</li>
+        <li>Calcular teóricamente los valores cinemáticos a partir de v<sub>0</sub>, el ángulo de disparo (&theta;) y la gravedad (g &approx; 9.81 m/s²).</li>
+        <li>Comparar los resultados teóricos y experimentales para hallar el error porcentual (E%).</li>
+      </ul>
+    </section>
+
+    <!-- III. PROYECTOS Y MATERIALES -->
+    <section>
+      <h2>II. Modelos de Lanzamiento y Materiales</h2>
+
+      <!-- MAQUETA 1: CAÑÓN -->
+      <div class="project-card">
+        <div class="project-header">
+          <img src="IMG-20261018-WA0057.jpg" alt="Cañón Casero de Jeringa" class="project-img">
+          <div class="project-info">
+            <h3>Maqueta 1: Cañón Casero de Jeringa y Tubo PVC</h3>
+            <p><strong>Resumen del Proyecto:</strong> Mecanismo neumático propulsado por tensión elástica construido con tubo PVC rojo sobre base de cartón estructurado.</p>
+            <p><strong>Datos Experimentales:</strong> Distancia D = 2.22 m, Tiempo T = 1.16 s.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-canon')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-canon" class="materials-content">
+          <h4>Materiales de la Maqueta 1:</h4>
+          <ul>
+            <li>1 Plancha de cartón</li>
+            <li>1 Jeringa de 10 ml</li>
+            <li>1 Tubo PVC</li>
+            <li>2 Ligas elásticas</li>
+            <li>1 Tornillo y 1 Tuerca</li>
+          </ul>
+          <div class="materials-gallery">
+            <img src="IMG-20261018-WA0057.jpg" alt="Detalle del Cañón">
+          </div>
+        </div>
+      </div>
+
+      <!-- MAQUETA 2: CATAPULTA -->
+      <div class="project-card">
+        <div class="project-header">
+          <img src="IMG-20261018-WA0062.jpg" alt="Catapulta de Madera" class="project-img">
+          <div class="project-info">
+            <h3>Maqueta 2: Catapulta de Madera</h3>
+            <p><strong>Resumen del Proyecto:</strong> Sistema de palanca mecánica y brazo pivotante con cuchara de madera, soporte de triplay y transportador integrado para la calibración del ángulo de tiro.</p>
+            <p><strong>Datos Experimentales:</strong> Distancia D = 2.31 m, Tiempo T = 0.60 s.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-catapulta')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-catapulta" class="materials-content">
+          <h4>Materiales de la Maqueta 2:</h4>
+          <ul>
+            <li>1 Gancho metálico</li>
+            <li>2 Clavos de 1 y 2 pulgadas</li>
+            <li>1 Tabla de soporte y Palos de madera</li>
+            <li>1 Cuchara de madera</li>
+            <li>1 Plancha de triplay</li>
+            <li>1 Transportador</li>
+          </ul>
+          <div class="materials-gallery">
+            <img src="IMG-20261018-WA0062.jpg" alt="Detalle de la Catapulta">
+          </div>
+        </div>
+      </div>
+
+      <!-- CIRCUITO ELECTRÓNICO -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-info">
+            <h3>Sistema Electrónico de Medición (Arduino)</h3>
+            <p><strong>Resumen del Sistema:</strong> Módulo ultrasónico e infrarrojo integrado para registrar automáticamente el paso del proyectil y sincronizar la velocidad con la laptop.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-circuito')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-circuito" class="materials-content">
+          <h4>Materiales del Circuito:</h4>
+          <ul>
+            <li>1 Tarjeta Arduino Uno</li>
+            <li>1 Cable de conexión USB y Laptop</li>
+            <li>Cables de conexión Macho y Hembra</li>
+            <li>1 Sensor de distancia ultrasónico HC-SR04</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- IV. FÓRMULAS FÍSICAS -->
+    <section>
+      <h2>III. Fórmulas de Trabajo Cinemáticas</h2>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <strong>Componentes de Velocidad:</strong>
+          <div class="math-text">&bull; v<sub>0x</sub> = v<sub>0</sub> &middot; cos(&theta;)</div>
+          <div class="math-text">&bull; v<sub>0y</sub> = v<sub>0</sub> &middot; sen(&theta;)</div>
+        </div>
+        <div class="formula-card">
+          <strong>Tiempo de Vuelo:</strong>
+          <div class="math-text">t<sub>v</sub> = (2 &middot; v<sub>0</sub> &middot; sen(&theta;)) / g</div>
+        </div>
+        <div class="formula-card">
+          <strong>Alcance Horizontal:</strong>
+          <div class="math-text">A = (v<sub>0</sub>² &middot; sen(2&theta;)) / g</div>
+        </div>
+        <div class="formula-card">
+          <strong>Altura Máxima:</strong>
+          <div class="math-text">h<sub>max</sub> = (v<sub>0</sub> &middot; sen(&theta;))² / (2g)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- V. CALCULADORA INTERACTIVA -->
+    <section>
+      <h2>IV. Calculadora de Trayectoria y Velocidad</h2>
+      <p>Ingresa la velocidad inicial y el ángulo para calcular el comportamiento del proyectil:</p>
+
+      <div class="calculator-box">
+        <div class="input-grid">
+          <div>
+            <label for="v0">Velocidad Inicial (v<sub>0</sub> en m/s):</label>
+            <input type="number" id="v0" placeholder="Ej. 5.2" step="any">
+          </div>
+          <div>
+            <label for="angulo">Ángulo (&theta; en grados):</label>
+            <input type="number" id="angulo" placeholder="Ej. 45" step="any">
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcularCinematica()">Calcular Resultados Teóricos</button>
+
+        <div id="resultadoCalculo" class="results-box">
+          <h4 style="margin-top:0; color:var(--highlight);">Resultados Calculados:</h4>
+          <p id="resVx">Velocidad Horizontal (v<sub>0x</sub>): -</p>
+          <p id="resVy">Velocidad Vertical (v<sub>0y</sub>): -</p>
+          <p id="resAltura">Altura Máxima (h<sub>max</sub>): -</p>
+          <p id="resAlcance">Alcance Horizontal (A): -</p>
+          <p id="resTiempo">Tiempo de Vuelo (t<sub>v</sub>): -</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VI. INTEGRANTES -->
+    <section>
+      <h2>V. Integrantes del Proyecto</h2>
+      <ul>
+        <li>Galvez Muños Luciana Maximina</li>
+        <li>Lopez Espiritu Mayck Samuel</li>
+        <li>Mayta Aliaga Daniel Xavier</li>
+        <li>Tinoco Ruiz Luis Giovani</li>
+        <li>Valdez Carmona Britany Juliet</li>
+        <li>Yaranga Rojas Yenifer</li>
+      </ul>
+    </section>
+
+    <!-- VII. VIDEO EXPERIMENTAL -->
+    <section style="text-align: center;">
+      <h2>VI. Video Demostrativo del Experimento</h2>
+      <p>Haz clic en el botón para ver el video completo en Google Drive:</p>
+      <br>
+      <a href="https://drive.google.com/file/d/1jMeJTaxj__QhsM9PsDGZ4-hUxBJwH8_r/view?usp=drivesdk" target="_blank" class="btn-video">
+        ▶ Ver Video del Experimento en Google Drive
+      </a>
+    </section>
+
+    <footer>
+      <p>Universidad Nacional del Centro del Perú - FIQ © 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleMaterials(id) {
+      const elemento = document.getElementById(id);
+      if (elemento.classList.contains('active')) {
+        elemento.classList.remove('active');
+      } else {
+        elemento.classList.add('active');
+      }
+    }
+
+    function calcularCinematica() {
+      const v0 = parseFloat(document.getElementById('v0').value);
+      const anguloDeg = parseFloat(document.getElementById('angulo').value);
+      const g = 9.81;
+
+      if (isNaN(v0) || isNaN(anguloDeg)) {
+        alert("Por favor ingresa valores numéricos para la velocidad y el ángulo.");
+        return;
+      }
+
+      const rad = anguloDeg * (Math.PI / 180);
+
+      const v0x = v0 * Math.cos(rad);
+      const v0y = v0 * Math.sin(rad);
+
+      const hMax = Math.pow(v0y, 2) / (2 * g);
+      const tVuelo = (2 * v0y) / g;
+      const alcance = (Math.pow(v0, 2) * Math.sin(2 * rad)) / g;
+
+      document.getElementById('resVx').innerHTML = "Velocidad Horizontal (v<sub>0x</sub>): <strong>" + v0x.toFixed(2) + " m/s</strong>";
+      document.getElementById('resVy').innerHTML = "Velocidad Vertical (v<sub>0y</sub>): <strong>" + v0y.toFixed(2) + " m/s</strong>";
+      document.getElementById('resAltura').innerHTML = "Altura Máxima (h<sub>max</sub>): <strong>" + hMax.toFixed(3) + " m</strong>";
+      document.getElementById('resAlcance').innerHTML = "Alcance Horizontal (A): <strong>" + alcance.toFixed(3) + " m</strong>";
+      document.getElementById('resTiempo').innerHTML = "Tiempo de Vuelo (t<sub>v</sub>): <strong>" + tVuelo.toFixed(3) + " s</strong>";
+
+      document.getElementById('resultadoCalculo').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
