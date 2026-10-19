@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análisis Cinemático del Movimiento Parabólico - UNCP</title>
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --accent-color: #00f2fe;
+      --text-color: #c9d1d9;
+      --border-color: #30363d;
+      --highlight: #4fd1c5;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 35px 20px;
+      background: linear-gradient(135deg, #1f242d, #0d1117);
+      border-bottom: 2px solid var(--accent-color);
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .institution {
+      font-size: 0.95rem;
+      color: var(--highlight);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      color: var(--accent-color);
+      font-size: 1.8rem;
+      margin: 10px 0;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: #8b949e;
+      font-size: 1.05rem;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: var(--accent-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      font-size: 1.3rem;
+    }
+
+    h3 {
+      color: var(--highlight);
+      font-size: 1.1rem;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tarjetas de Proyectos */
+    .project-card {
+      background-color: #0d1117;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .project-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .project-img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: #161b22;
+    }
+
+    .project-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .btn-materials {
+      background-color: transparent;
+      color: var(--accent-color);
+      border: 1px solid var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-materials:hover {
+      background-color: var(--accent-color);
+      color: #0d1117;
+    }
+
+    .materials-content {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .materials-content.active {
+      display: block;
+    }
+
+    .materials-gallery {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .materials-gallery img {
+      width: 160px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid var(--border-color);
+      background-color: #21262d;
+    }
+
+    /* Calculadora */
+    .calculator-box {
+      background-color: #0d1117;
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--highlight);
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 9px;
+      background-color: #161b22;
+      border: 1px solid var(--border-color);
+      color: white;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .btn-calc {
+      background-color: var(--accent-color);
+      color: #0d1117;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-calc:hover {
+      background-color: var(--highlight);
+    }
+
+    .results-box {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #16222f;
+      border-left: 4px solid var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .formula-card {
+      background-color: #0d1117;
+      border-left: 3px solid var(--highlight);
+      padding: 12px;
+      font-family: 'Consolas', Courier, monospace;
+      font-size: 0.9rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background-color: #000;
+      margin-top: 15px;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #8b949e;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- I. ENCABEZADO -->
+    <header>
+      <div class="institution">Universidad Nacional del Centro del Perú</div>
+      <div class="institution">Facultad de Ingeniería Química | Asignatura: Física I</div>
+      <h1>Análisis Cinemático del Movimiento Parabólico</h1>
+      <p class="subtitle">Descomposición en MRU y MRUV mediante dos modelos de lanzamiento</p>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: var(--highlight);">Docente: Ing. Vilma Calderon Flores</p>
+    </header>
+
+    <!-- II. RESUMEN Y OBJETIVOS -->
+    <section>
+      <h2>I. Resumen y Objetivos</h2>
+      <p>
+        El presente proyecto analiza la cinemática del movimiento parabólico mediante dos modelos de lanzamiento experimentales: 
+        un <strong>cañón de jeringa</strong> y una <strong>catapulta de madera</strong>. 
+        El estudio se basa en la descomposición del movimiento en su componente horizontal (MRU) y vertical (MRUV), midiendo alcance horizontal, tiempo de vuelo y velocidades con la ayuda de un circuito basado en <strong>Arduino Uno</strong> y un sensor ultrasónico <strong>HC-SR04</strong>.
+      </p>
+
+      <h3>Objetivos Específicos:</h3>
+      <ul>
+        <li>Determinar experimentalmente el alcance horizontal, tiempo de vuelo y velocidades inicial y final.</li>
+        <li>Aplicar las ecuaciones del MRU y MRUV para descomponer el movimiento parabólico.</li>
+        <li>Calcular teóricamente los valores cinemáticos a partir de $v_0$, el ángulo de disparo ($\theta$) y la gravedad ($g \approx 9.81 \text{ m/s}^2$).</li>
+        <li>Comparar los resultados teóricos y experimentales para hallar el error porcentual ($E\%$).</li>
+      </ul>
+    </section>
+
+    <!-- III. PROYECTOS Y MATERIALES -->
+    <section>
+      <h2>II. Modelos de Lanzamiento y Materiales</h2>
+
+      <!-- MAQUETA 1: CAÑÓN -->
+      <div class="project-card">
+        <div class="project-header">
+          <img src="30168.jpg" alt="Cañón Casero de Jeringa" class="project-img" onerror="this.src='https://via.placeholder.com/200x150?text=Foto+Ca%C3%B1%C3%B3n'">
+          <div class="project-info">
+            <h3>Maqueta 1: Cañón Casero de Jeringa y Tubo PVC</h3>
+            <p><strong>Resumen del Proyecto:</strong> Mecanismo neumático propulsado por tensión elástica construido con tubo PVC rojo sobre base de cartón estructurado.</p>
+            <p><strong>Datos Experimentales:</strong> Distancia $D = 2.22 \text{ m}$, Tiempo $T = 1.16 \text{ s}$.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-canon')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-canon" class="materials-content">
+          <h4>Materiales de la Maqueta 1:</h4>
+          <ul>
+            <li>1 Plancha de cartón</li>
+            <li>1 Jeringa de 10 ml</li>
+            <li>1 Tubo PVC</li>
+            <li>2 Ligas elásticas</li>
+            <li>1 Tornillo y 1 Tuerca</li>
+          </ul>
+          <div class="materials-gallery">
+            <img src="30168.jpg" alt="Detalle del Cañón" onerror="this.src='https://via.placeholder.com/160x120?text=Ca%C3%B1%C3%B3n'">
+          </div>
+        </div>
+      </div>
+
+      <!-- MAQUETA 2: CATAPULTA -->
+      <div class="project-card">
+        <div class="project-header">
+          <img src="30190.jpg" alt="Catapulta de Madera" class="project-img" onerror="this.src='https://via.placeholder.com/200x150?text=Foto+Catapulta'">
+          <div class="project-info">
+            <h3>Maqueta 2: Catapulta de Madera</h3>
+            <p><strong>Resumen del Proyecto:</strong> Sistema de palanca mecánica y brazo pivotante con cuchara de madera, soporte de triplay y transportador integrado para la calibración del ángulo de tiro.</p>
+            <p><strong>Datos Experimentales:</strong> Distancia $D = 2.31 \text{ m}$, Tiempo $T = 0.60 \text{ s}$.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-catapulta')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-catapulta" class="materials-content">
+          <h4>Materiales de la Maqueta 2:</h4>
+          <ul>
+            <li>1 Gancho metálico</li>
+            <li>2 Clavos de 1 y 2 pulgadas</li>
+            <li>1 Tabla de soporte y Palos de madera</li>
+            <li>1 Cuchara de madera</li>
+            <li>1 Plancha de triplay</li>
+            <li>1 Transportador</li>
+          </ul>
+          <div class="materials-gallery">
+            <img src="30190.jpg" alt="Detalle de la Catapulta" onerror="this.src='https://via.placeholder.com/160x120?text=Catapulta'">
+          </div>
+        </div>
+      </div>
+
+      <!-- CIRCUITO ELECTRÓNICO -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-info">
+            <h3>Sistema Electrónico de Medición (Arduino)</h3>
+            <p><strong>Resumen del Sistema:</strong> Módulo ultrasónico e infrarrojo integrado para registrar automáticamente el paso del proyectil y sincronizar la velocidad con la laptop.</p>
+            <button class="btn-materials" onclick="toggleMaterials('mat-circuito')">Ver Materiales ⬇</button>
+          </div>
+        </div>
+
+        <div id="mat-circuito" class="materials-content">
+          <h4>Materiales del Circuito:</h4>
+          <ul>
+            <li>1 Tarjeta Arduino Uno</li>
+            <li>1 Cable de conexión USB y Laptop</li>
+            <li>Cables de conexión Macho y Hembra</li>
+            <li>1 Sensor de distancia ultrasónico HC-SR04</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- IV. FÓRMULAS FÍSICAS -->
+    <section>
+      <h2>III. Fórmulas de Trabajo Cinemáticas</h2>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <strong>Componentes de la Velocidad:</strong><br>
+          • $v_{0x} = v_0 \cdot \cos(\theta)$<br>
+          • $v_{0y} = v_0 \cdot \sin(\theta)$
+        </div>
+        <div class="formula-card">
+          <strong>Tiempo de Vuelo Teórico ($t_v$):</strong><br>
+          $$t_v = \frac{2 \cdot v_0 \cdot \sin(\theta)}{g}$$
+        </div>
+        <div class="formula-card">
+          <strong>Alcance Horizontal ($A$):</strong><br>
+          $$A = \frac{v_0^2 \cdot \sin(2\theta)}{g}$$
+        </div>
+        <div class="formula-card">
+          <strong>Altura Máxima ($h_{max}$):</strong><br>
+          $$h_{max} = \frac{(v_0 \cdot \sin(\theta))^2}{2g}$$
+        </div>
+      </div>
+    </section>
+
+    <!-- V. CALCULADORA INTERACTIVA -->
+    <section>
+      <h2>IV. Calculadora de Trayectoria y Velocidad</h2>
+      <p>Ingresa la velocidad inicial y el ángulo para calcular el comportamiento del proyectil:</p>
+
+      <div class="calculator-box">
+        <div class="input-grid">
+          <div>
+            <label for="v0">Velocidad Inicial ($v_0$ en m/s):</label>
+            <input type="number" id="v0" placeholder="Ej. 5.2" step="any">
+          </div>
+          <div>
+            <label for="angulo">Ángulo ($\theta$ en grados):</label>
+            <input type="number" id="angulo" placeholder="Ej. 45" step="any">
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcularCinematica()">Calcular Resultados Teóricos</button>
+
+        <div id="resultadoCalculo" class="results-box">
+          <h4 style="margin-top:0; color:var(--highlight);">Resultados Calculados:</h4>
+          <p id="resVx">Velocidad Horizontal ($v_{0x}$): -</p>
+          <p id="resVy">Velocidad Vertical ($v_{0y}$): -</p>
+          <p id="resAltura">Altura Máxima ($h_{max}$): -</p>
+          <p id="resAlcance">Alcance Horizontal ($A$): -</p>
+          <p id="resTiempo">Tiempo de Vuelo ($t_v$): -</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VI. INTEGRANTES -->
+    <section>
+      <h2>V. Integrantes del Proyecto</h2>
+      <ul>
+        <li>Galvez Muños Luciana Maximina</li>
+        <li>Lopez Espiritu Mayck Samuel</li>
+        <li>Mayta Aliaga Daniel Xavier</li>
+        <li>Tinoco Ruiz Luis Giovani</li>
+        <li>Valdez Carmona Britany Juliet</li>
+        <li>Yaranga Rojas Yenifer</li>
+      </ul>
+    </section>
+
+    <!-- VII. VIDEO EXPERIMENTAL -->
+    <section>
+      <h2>VI. Video Demostrativo del Experimento</h2>
+      <p>A continuación se presenta el video grabado ("video grupo 6.mp4") con las pruebas experimentales, el funcionamiento del circuito y la demostración de los lanzamientos:</p>
+      <div class="video-container">
+        <!-- Reproductor directo del video de Google Drive -->
+        <iframe src="https://drive.google.com/file/d/1jMeJTaxj__QhsM9PsDGZ4-hUxBJwH8_r/preview" allow="autoplay" frameborder="0"></iframe>
+      </div>
+    </section>
+
+    <footer>
+      <p>Universidad Nacional del Centro del Perú - FIQ © 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleMaterials(id) {
+      const elemento = document.getElementById(id);
+      if (elemento.classList.contains('active')) {
+        elemento.classList.remove('active');
+      } else {
+        elemento.classList.add('active');
+      }
+    }
+
+    function calcularCinematica() {
+      const v0 = parseFloat(document.getElementById('v0').value);
+      const anguloDeg = parseFloat(document.getElementById('angulo').value);
+      const g = 9.81;
+
+      if (isNaN(v0) || isNaN(anguloDeg)) {
+        alert("Por favor ingresa valores numéricos para la velocidad y el ángulo.");
+        return;
+      }
+
+      const rad = anguloDeg * (Math.PI / 180);
+
+      const v0x = v0 * Math.cos(rad);
+      const v0y = v0 * Math.sin(rad);
+
+      const hMax = Math.pow(v0y, 2) / (2 * g);
+      const tVuelo = (2 * v0y) / g;
+      const alcance = (Math.pow(v0, 2) * Math.sin(2 * rad)) / g;
+
+      document.getElementById('resVx').innerHTML = "Velocidad Horizontal ($v_{0x}$): <strong>" + v0x.toFixed(2) + " m/s</strong>";
+      document.getElementById('resVy').innerHTML = "Velocidad Vertical ($v_{0y}$): <strong>" + v0y.toFixed(2) + " m/s</strong>";
+      document.getElementById('resAltura').innerHTML = "Altura Máxima ($h_{max}$): <strong>" + hMax.toFixed(3) + " m</strong>";
+      document.getElementById('resAlcance').innerHTML = "Alcance Horizontal ($A$): <strong>" + alcance.toFixed(3) + " m</strong>";
+      document.getElementById('resTiempo').innerHTML = "Tiempo de Vuelo ($t_v$): <strong>" + tVuelo.toFixed(3) + " s</strong>";
+
+      document.getElementById('resultadoCalculo').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
